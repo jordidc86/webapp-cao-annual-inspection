@@ -5,12 +5,17 @@ export const dynamic = 'force-dynamic'
 
 export default async function BalloonListPage() {
   let balloons: any[] = []
-  try {
-    balloons = await prisma.balloon.findMany({
-      orderBy: { registration: 'asc' }
-    })
-  } catch (e) {
-    console.error('Database connection failed during build or runtime:', e)
+  
+  const isWorkingDB = process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('dummy')
+
+  if (isWorkingDB) {
+    try {
+      balloons = await prisma.balloon.findMany({
+        orderBy: { registration: 'asc' }
+      })
+    } catch (e) {
+      console.error('Database connection failed during build or runtime:', e)
+    }
   }
 
   return (

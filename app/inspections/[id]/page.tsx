@@ -14,18 +14,22 @@ export default async function InspectionDetailPage({
   params: { id: string }
 }) {
   let inspection: any = null
-  try {
-    inspection = await prisma.annualInspection.findUnique({
-      where: { id: params.id },
-      include: {
-        balloon: true,
-        documents: {
-          orderBy: { documentType: 'asc' }
+  const isWorkingDB = process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('dummy')
+
+  if (isWorkingDB) {
+    try {
+      inspection = await prisma.annualInspection.findUnique({
+        where: { id: params.id },
+        include: {
+          balloon: true,
+          documents: {
+            orderBy: { documentType: 'asc' }
+          }
         }
-      }
-    })
-  } catch (e) {
-    console.error('Database connection failed:', e)
+      })
+    } catch (e) {
+      console.error('Database connection failed:', e)
+    }
   }
 
   if (!inspection) {
