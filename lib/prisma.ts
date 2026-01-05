@@ -4,6 +4,15 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+export const getPrisma = () => {
+  if (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('dummy')) {
+    return null
+  }
+  
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = new PrismaClient()
+  }
+  return globalForPrisma.prisma
+}
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+export const prisma = getPrisma() as PrismaClient
