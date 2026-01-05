@@ -6,6 +6,8 @@ import { GenerateDocsButton } from '@/components/GenerateDocsButton'
 import { markAsSigned, finalizeInspection, generateSupportingDocuments, uploadWorkOrder } from '@/lib/actions'
 import { UploadSignedButton } from '@/components/UploadSignedButton'
 
+export const dynamic = 'force-dynamic'
+
 export default async function InspectionDetailPage({
   params
 }: {

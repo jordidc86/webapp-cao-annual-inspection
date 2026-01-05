@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { NewInspectionButton } from '@/components/NewInspectionButton'
 
+export const dynamic = 'force-dynamic'
+
 export default async function BalloonDetailPage({
   params
 }: {
