@@ -11,7 +11,7 @@ export default async function BalloonDetailPage({
 }: {
   params: { serialNumber: string }
 }) {
-  let balloon = null
+  let balloon: any = null
   try {
     balloon = await prisma.balloon.findUnique({
       where: { serialNumber: params.serialNumber },

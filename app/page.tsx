@@ -4,7 +4,7 @@ import { Plus, Search, Plane } from 'lucide-react'
 export const dynamic = 'force-dynamic'
 
 export default async function BalloonListPage() {
-  let balloons = []
+  let balloons: any[] = []
   try {
     balloons = await prisma.balloon.findMany({
       orderBy: { registration: 'asc' }

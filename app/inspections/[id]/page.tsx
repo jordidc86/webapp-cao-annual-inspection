@@ -13,7 +13,7 @@ export default async function InspectionDetailPage({
 }: {
   params: { id: string }
 }) {
-  let inspection = null
+  let inspection: any = null
   try {
     inspection = await prisma.annualInspection.findUnique({
       where: { id: params.id },
