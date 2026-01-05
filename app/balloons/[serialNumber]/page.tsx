@@ -33,7 +33,7 @@ export default async function BalloonDetailPage({
     notFound()
   }
 
-  const activeInspection = balloon.inspections.find(i => i.status !== 'CLOSED')
+  const activeInspection = balloon.inspections.find((i: any) => i.status !== 'CLOSED')
 
   return (
     <div className="container fade-in">

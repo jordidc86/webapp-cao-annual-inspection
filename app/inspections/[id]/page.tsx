@@ -37,8 +37,8 @@ export default async function InspectionDetailPage({
 
   const isClosed = inspection.status === 'CLOSED'
   const supportingTypes = ['TR', 'DR', 'DDL', 'ML']
-  const canIssueCRS = supportingTypes.every(type => 
-    inspection.documents.find(d => d.documentType === type && d.status === 'SIGNED')
+  const canIssueCRS = supportingTypes.every((type: any) => 
+    inspection.documents.find((d: any) => d.documentType === type && d.status === 'SIGNED')
   )
 
   const handleMarkSigned = async (type: string) => {
