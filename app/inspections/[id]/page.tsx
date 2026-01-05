@@ -115,8 +115,8 @@ export default async function InspectionDetailPage({
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {supportingTypes.map(type => {
-                const doc = inspection.documents.find(d => d.documentType === type)
+              {supportingTypes.map((type: any) => {
+                const doc = inspection.documents.find((d: any) => d.documentType === type)
                 return (
                   <div key={type} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'var(--muted)', borderRadius: '0.5rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -179,7 +179,7 @@ export default async function InspectionDetailPage({
                 <div style={{ fontWeight: 600 }}>Inspection Created</div>
                 <div style={{ color: 'var(--muted-foreground)' }}>{new Date(inspection.createdAt).toLocaleString()}</div>
               </div>
-              {inspection.documents.map(doc => (
+              {inspection.documents.map((doc: any) => (
                 <div key={doc.id} style={{ borderLeft: `2px solid ${doc.status === 'SIGNED' ? 'var(--success)' : 'var(--border)'}`, paddingLeft: '1rem' }}>
                   <div style={{ fontWeight: 600 }}>{doc.documentType} {doc.status.toLowerCase()}</div>
                   <div style={{ color: 'var(--muted-foreground)' }}>{new Date(doc.generatedAt).toLocaleString()}</div>

@@ -70,7 +70,7 @@ export default async function BalloonDetailPage({
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {balloon.inspections.length > 0 ? (
-          balloon.inspections.map((inspection) => (
+          balloon.inspections.map((inspection: any) => (
             <div key={inspection.id} className="card" style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', alignItems: 'center', gap: '2rem' }}>
               <div className="glass" style={{ padding: '0.75rem', borderRadius: '0.5rem', color: 'var(--primary)' }}>
                 <FileText size={24} />

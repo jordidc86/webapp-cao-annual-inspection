@@ -44,7 +44,7 @@ export default async function BalloonListPage() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-        {balloons.map((balloon) => (
+        {balloons.map((balloon: any) => (
           <div key={balloon.serialNumber} className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
               <div className="glass" style={{ padding: '0.75rem', borderRadius: '0.5rem', color: 'var(--primary)' }}>
