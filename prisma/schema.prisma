@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Balloon {
+  serialNumber String   @id
+  registration String
+  manufacturer String
+  model        String
+  operator     String
+  status       String   @default("Active")
+  
+  // Technical fields from Excel can be added as JSON or separate fields
+  technicalData Json?
+
+  inspections  AnnualInspection[]
+
+  @@index([registration])
+}
+
+enum InspectionStatus {
+  DRAFT
+  DOCUMENTS_GENERATED
+  SIGNED
+  CRS_ISSUED
+  CLOSED
+}
+
+model AnnualInspection {
+  id                  String           @id @default(cuid())
+  balloonSerialNumber String
+  balloon             Balloon          @relation(fields: [balloonSerialNumber], references: [serialNumber])
+  status              InspectionStatus @default(DRAFT)
+  inspectionDate      DateTime?
+  workOrderFile       String?          // Path/URL to uploaded PDF
+  
+  createdAt           DateTime @default(now())
+  closedAt            DateTime?
+
+  documents           Document[]
+
+  @@index([balloonSerialNumber])
+}
+
+enum DocumentType {
+  TR
+  DR
+  DDL
+  ML
+  CRS
+}
+
+enum DocumentStatus {
+  GENERATED
+  SIGNED
+}
+
+model Document {
+  id                 String           @id @default(cuid())
+  annualInspectionId String
+  inspection         AnnualInspection @relation(fields: [annualInspectionId], references: [id])
+  documentType       DocumentType
+  status             DocumentStatus   @default(GENERATED)
+  filePath           String?
+  
+  generatedAt        DateTime @default(now())
+  signedAt           DateTime?
+
+  @@index([annualInspectionId])
+  @@unique([annualInspectionId, documentType])
+}
