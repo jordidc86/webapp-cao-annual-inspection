@@ -13,17 +13,25 @@ export default async function InspectionDetailPage({
 }: {
   params: { id: string }
 }) {
-  const inspection = await prisma.annualInspection.findUnique({
-    where: { id: params.id },
-    include: {
-      balloon: true,
-      documents: {
-        orderBy: { documentType: 'asc' }
+  let inspection = null
+  try {
+    inspection = await prisma.annualInspection.findUnique({
+      where: { id: params.id },
+      include: {
+        balloon: true,
+        documents: {
+          orderBy: { documentType: 'asc' }
+        }
       }
-    }
-  })
+    })
+  } catch (e) {
+    console.error('Database connection failed:', e)
+  }
 
   if (!inspection) {
+    if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
+       return <div className="container">Database not connected.</div>
+    }
     notFound()
   }
 

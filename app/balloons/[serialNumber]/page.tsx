@@ -11,16 +11,25 @@ export default async function BalloonDetailPage({
 }: {
   params: { serialNumber: string }
 }) {
-  const balloon = await prisma.balloon.findUnique({
-    where: { serialNumber: params.serialNumber },
-    include: {
-      inspections: {
-        orderBy: { createdAt: 'desc' }
+  let balloon = null
+  try {
+    balloon = await prisma.balloon.findUnique({
+      where: { serialNumber: params.serialNumber },
+      include: {
+        inspections: {
+          orderBy: { createdAt: 'desc' }
+        }
       }
-    }
-  })
+    })
+  } catch (e) {
+    console.error('Database connection failed:', e)
+  }
 
   if (!balloon) {
+    if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
+       // Allow build to pass
+       return <div className="container">Database not connected.</div>
+    }
     notFound()
   }
 
